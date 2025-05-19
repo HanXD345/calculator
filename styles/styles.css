@@ -43,6 +43,7 @@ button:active {
     justify-content: flex-end;
     align-items: center;
     background-color: rgb(53, 53, 53);
+    font-size: 100px;
 }
 
 .operations-body {
