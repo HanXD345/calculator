@@ -23,5 +23,21 @@ body {
 
 .operations {
     border: medium solid black;
-    flex: 2
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+}
+
+.operations .row {
+    flex: 1;
+    display: flex;
+
+}
+
+.row button {
+    flex: 1;
+}
+
+.fifth-row .zero {
+    flex: 28%;
 }
