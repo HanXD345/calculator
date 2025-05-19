@@ -1,2 +1,2 @@
 # calculator
-Calculator project using HTML, CSS, and JavaScript for from The Odin Project curriculum.
+Calculator project using HTML, CSS, and JavaScript from The Odin Project curriculum.
