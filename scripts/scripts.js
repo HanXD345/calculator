@@ -30,24 +30,28 @@ const operate = (operation, a, b) => {
     }
 }
 
-// Applies event listeners to each button, and 
+// Applies event listeners to each numeric button, and 
 // shows the content accordingly to the results
 // section
 for (let button of numButtons) {
     button.addEventListener("click", (event) => {
-        if (significant === 0) {
-            firstNum = resultsSection.textContent === "0"
-                        ? event.target.textContent 
-                        : resultsSection.textContent.concat("", event.target.textContent);
-            resultsSection.textContent = firstNum;
+        if (event.target.textContent === ".") {
+            if (resultsSection.textContent.indexOf(".") === -1) {
+                resultsSection.textContent += "."
+            }
         } else {
-            secondNum = resultsSection.textContent === firstNum 
+            if (significant === 0) {
+                firstNum = resultsSection.textContent === "0"
                             ? event.target.textContent 
                             : resultsSection.textContent.concat("", event.target.textContent);
-            resultsSection.textContent = secondNum;
-        };
-        console.log(`First num: ${firstNum}`);
-        console.log(`Second num: ${secondNum}`);
+                resultsSection.textContent = firstNum;
+            } else {
+                secondNum = resultsSection.textContent === firstNum 
+                                ? event.target.textContent 
+                                : resultsSection.textContent.concat("", event.target.textContent);
+                resultsSection.textContent = secondNum;
+            };
+        }
     });
 };
 
