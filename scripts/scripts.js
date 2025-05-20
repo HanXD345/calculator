@@ -10,17 +10,22 @@ let significant = 0;
 
 // Calculator Operations
 const operate = (operation, a, b) => {
+    a = Number(a)
+    b = Number(b)
     if (operation === "+") {
-        return Number(a) + Number(b)
+        return a + b
     } else if (operation === "-") {
-        return Number(a) - Number(b)
+        return a - b
     } else if (operation === "*") {
-        return Number(a) * Number(b)
+        return a * b
     } else if (operation === "/") {
-        if (b === "0") {
+        if (b === 0) {
             alert("Don't");
             return
-        };
+        } else if (a / b % 1 !== 0) {
+            result = a / b;
+            return Number(result.toFixed(8));
+        }
         return Number(a) / Number(b);
     }
 }
