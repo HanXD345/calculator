@@ -1,7 +1,7 @@
 const numButtons = document.querySelectorAll(".button");
 const resultsSection = document.querySelector(".results-body");
 let firstNum = null;
-let operation = null
+let operation = null;
 let secondNum = null;
 let significant = 0;
 
@@ -36,12 +36,27 @@ operationButtons = document.querySelectorAll(".operation");
 
 for (let operation of operationButtons) {
     operation.addEventListener("click", (event) => {
-        if (significant === 0) {
-            significant = 1;
-            operation = event.target.textContent;
-            resultsSection.textContent = "0";
+        if (event.target.textContent === "=") {
+            if (firstNum === null) {
+                ;
+            } else if (firstNum !== null && secondNum === null) {
+                resultsSection.textContent = firstNum;
+            } else {
+                resultsSection.textContent = operate("+", firstNum, secondNum);
+                firstNum = resultsSection.textContent;
+                secondNum = null;
+                significant = 0;
+            }
         } else {
-            resultsSection.textContent = operate(operation, firstNum, secondNum);
+            if (significant === 0) {
+                significant = 1;
+                operation = event.target.textContent;
+                resultsSection.textContent = "0";
+            } else {
+                resultsSection.textContent = operate(operation, firstNum, secondNum);
+                firstNum = secondNum;
+                secondNum = null;
+            }
         }
     })
 }
