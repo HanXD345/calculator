@@ -1,7 +1,7 @@
 const numButtons = document.querySelectorAll(".button");
 const resultsSection = document.querySelector(".results-body");
 let firstNum = null;
-let operation = null;
+let operationApplied = null;
 let secondNum = null;
 let significant = 0;
 
@@ -13,7 +13,11 @@ const operate = (operation, a, b) => {
     } else if (operation === "*") {
         return Number(a) * Number(b)
     } else if (operation === "/") {
-        return Number(a) / Number(b)
+        if (b === "0") {
+            alert("Don't");
+            return
+        };
+        return Number(a) / Number(b);
     }
 }
 
@@ -42,7 +46,7 @@ for (let operation of operationButtons) {
             } else if (firstNum !== null && secondNum === null) {
                 resultsSection.textContent = firstNum;
             } else {
-                resultsSection.textContent = operate("+", firstNum, secondNum);
+                resultsSection.textContent = operate(operationApplied, firstNum, secondNum);
                 firstNum = resultsSection.textContent;
                 secondNum = null;
                 significant = 0;
@@ -50,10 +54,10 @@ for (let operation of operationButtons) {
         } else {
             if (significant === 0) {
                 significant = 1;
-                operation = event.target.textContent;
+                operationApplied = event.target.textContent;
                 resultsSection.textContent = "0";
             } else {
-                resultsSection.textContent = operate(operation, firstNum, secondNum);
+                resultsSection.textContent = operate(operationApplied, firstNum, secondNum);
                 firstNum = secondNum;
                 secondNum = null;
             }
