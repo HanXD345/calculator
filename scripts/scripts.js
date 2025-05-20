@@ -3,8 +3,12 @@ const resultsSection = document.querySelector(".results-body");
 let firstNum = null;
 let operationApplied = null;
 let secondNum = null;
+
+// Determines which number should be manipulated
+// based on input
 let significant = 0;
 
+// Calculator Operations
 const operate = (operation, a, b) => {
     if (operation === "+") {
         return Number(a) + Number(b)
@@ -21,21 +25,28 @@ const operate = (operation, a, b) => {
     }
 }
 
+// Applies event listeners to each button, and 
+// shows the content accordingly to the results
+// section
 for (let button of numButtons) {
     button.addEventListener("click", (event) => {
-        resultsSection.textContent = resultsSection.textContent === "0" 
-                                        ? event.target.textContent 
-                                        : resultsSection.textContent.concat("", event.target.textContent);
         if (significant === 0) {
-            firstNum = resultsSection.textContent;
+            firstNum = resultsSection.textContent === "0"
+                        ? event.target.textContent 
+                        : resultsSection.textContent.concat("", event.target.textContent);
+            resultsSection.textContent = firstNum;
         } else {
-            secondNum = resultsSection.textContent;
+            secondNum = resultsSection.textContent === firstNum 
+                            ? event.target.textContent 
+                            : resultsSection.textContent.concat("", event.target.textContent);
+            resultsSection.textContent = secondNum;
         };
         console.log(`First num: ${firstNum}`);
         console.log(`Second num: ${secondNum}`);
     });
 };
 
+// Applies operations to the given expression
 operationButtons = document.querySelectorAll(".operation");
 
 for (let operation of operationButtons) {
@@ -55,11 +66,11 @@ for (let operation of operationButtons) {
             if (significant === 0) {
                 significant = 1;
                 operationApplied = event.target.textContent;
-                resultsSection.textContent = "0";
             } else {
                 resultsSection.textContent = operate(operationApplied, firstNum, secondNum);
-                firstNum = secondNum;
+                firstNum = resultsSection.textContent;
                 secondNum = null;
+                operationApplied = event.target.textContent;
             }
         }
     })
@@ -70,19 +81,24 @@ const resetButton = document.querySelector(".reset");
 
 resetButton.addEventListener("click", () => {
     resultsSection.textContent = "0";
+    firstNum = null;
+    secondNum = null;
 });
 
 // Changes the sign of the current number
 const signButton = document.querySelector(".sign-change");
 
 signButton.addEventListener("click", () => {
-    resultsSection.textContent = resultsSection.textContent[0] !== "-" 
-                                    ? `-${resultsSection.textContent}`
-                                    : resultsSection.textContent.slice(1, resultsSection.textContent.length);
+    resultsSection.textContent = Number(resultsSection.textContent) * -1
+    if (significant === 0) {
+        firstNum *= -1
+    } else {
+        secondNum *= -1
+    }
     console.log(resultsSection.textContent);
 });
 
-// Changes the current number to its relative percentage value
+// Changes the current (significant) number to its relative percentage value
 const percentButton = document.querySelector(".percent");
 
 percentButton.addEventListener("click", () => {
