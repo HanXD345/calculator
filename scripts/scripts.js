@@ -118,9 +118,11 @@ percentButton.addEventListener("click", () => {
 });
 
 // Backspace support - Allows user to use backspace
-// to delete unwanted digits
+// to delete unwanted digits, as well as use the
+// keyboard to type numbers in
 document.addEventListener("keydown", (event) => {
     const key = event.key;
+    const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
     if (key === "Backspace" || key === "Delete") {
         const newResult = resultsSection.textContent.slice(0, resultsSection.textContent.length - 1)
@@ -134,6 +136,19 @@ document.addEventListener("keydown", (event) => {
             firstNum = resultsSection.textContent;
         } else {
             secondNum = resultsSection.textContent;
+        }
+    } else if (key in numbers) {
+        if (significant === 0) {
+            firstNum = resultsSection.textContent === "0"
+                        ? key
+                        : resultsSection.textContent.concat("", key);
+            resultsSection.textContent = firstNum;
+        } else {
+            secondNum = Number(resultsSection.textContent) === Number(firstNum) 
+                        || resultsSection.textContent === "0"
+                        ? key
+                        : resultsSection.textContent.concat("", key);
+            resultsSection.textContent = secondNum;
         }
     }
 })
