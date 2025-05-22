@@ -48,7 +48,7 @@ for (let button of numButtons) {
                             : resultsSection.textContent.concat("", event.target.textContent);
                 resultsSection.textContent = firstNum;
             } else {
-                secondNum = resultsSection.textContent === firstNum 
+                secondNum = resultsSection.textContent === firstNum || resultsSection.textContent === "0"
                                 ? event.target.textContent 
                                 : resultsSection.textContent.concat("", event.target.textContent);
                 resultsSection.textContent = secondNum;
@@ -115,3 +115,25 @@ const percentButton = document.querySelector(".percent");
 percentButton.addEventListener("click", () => {
     resultsSection.textContent = Number(resultsSection.textContent) / 100;
 });
+
+// Backspace support - Allows user to use backspace
+// to delete unwanted digits
+
+document.addEventListener("keydown", (event) => {
+    const key = event.key;
+
+    if (key === "Backspace" || key === "Delete") {
+        const newResult = resultsSection.textContent.slice(0, resultsSection.textContent.length - 1)
+        if (newResult !== "") {
+            resultsSection.textContent = newResult
+        } else {
+            resultsSection.textContent = "0";
+        }
+
+        if (significant === 0) {
+            firstNum = resultsSection.textContent;
+        } else {
+            secondNum = resultsSection.textContent;
+        }
+    }
+})
