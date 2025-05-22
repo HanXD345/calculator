@@ -36,6 +36,8 @@ const operate = (operation, a, b) => {
 for (let button of numButtons) {
     button.addEventListener("click", (event) => {
         if (event.target.textContent === ".") {
+            // If the decimal isn't applied to the number yet, 
+            // then append it to the number
             if (resultsSection.textContent.indexOf(".") === -1) {
                 resultsSection.textContent += "."
             }
